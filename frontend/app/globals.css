@@ -1,0 +1,613 @@
+@import url('https://fonts.googleapis.com/css2?family=Figtree:wght@300..900&family=JetBrains+Mono:wght@100..800&family=Playfair+Display:wght@400;600;700;800;900&display=swap');
+@import "tailwindcss";
+
+@variant dark (&:where(.dark, .dark *));
+
+@theme {
+  --font-display: var(--font-playfair), "Playfair Display", Georgia, serif;
+  --font-sans: var(--font-sans), Figtree, Inter, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  --font-mono: var(--font-mono), "JetBrains Mono", Consolas, monospace;
+
+  --color-bg: var(--bg);
+  --color-surface: var(--surface);
+  --color-surface-alt: var(--surface-alt);
+  --color-ink: var(--ink);
+  --color-ink-muted: var(--ink-muted);
+  --color-ink-faint: var(--ink-faint);
+  --color-coral: var(--coral);
+  --color-coral-hover: var(--coral-hover);
+  --color-coral-pressed: var(--coral-pressed);
+  --color-navy-block: var(--navy-block);
+  --color-line: var(--line);
+
+  /* Status Tokens */
+  --color-status-process: #2F6FED;
+  --color-status-pending: #E8A317;
+  --color-status-disposed: #1E8E4E;
+  --color-status-overdue: #B0121B;
+  --color-status-transferred: #6D4AC7;
+}
+
+:root {
+  /* Fonts Fallbacks */
+  --font-sans: 'Figtree', Inter, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  --font-playfair: 'Playfair Display', Georgia, serif;
+  --font-mono: 'JetBrains Mono', Consolas, monospace;
+
+  /* Unified Monolithic Obsidian Dark Theme */
+  --bg: #080B14;
+  --surface: #0E1322;
+  --surface-alt: #14182B;
+  --ink: #FFFFFF;
+  --ink-muted: #9AA0B5;
+  --ink-faint: #606880;
+  --coral: #A00400;
+  --coral-hover: #8A0303;
+  --coral-pressed: #730202;
+  --navy-block: #14182B;
+  --line: rgba(255, 255, 255, 0.1);
+
+  /* Status Colors */
+  --status-process: #2F6FED;
+  --status-pending: #E8A317;
+  --status-disposed: #1E8E4E;
+  --status-overdue: #B0121B;
+  --status-transferred: #6D4AC7;
+
+  /* Dusk Constellation Hero Tokens */
+  --hero-cyan: #5FE0D0;
+  --hero-glow: rgba(95, 224, 208, 0.4);
+  --hero-dusk-top: #080B14;
+  --hero-dusk-mid: #0E1322;
+  --hero-dusk-bot: rgba(224, 90, 71, 0.12);
+  --hero-skyline-back: #0E1322;
+  --hero-skyline-front: #080B14;
+  --hero-sparkle: #E6B8E0;
+}
+
+.dark {
+  /* Unified Monolithic Obsidian Dark Theme */
+  --bg: #080B14;
+  --surface: #0E1322;
+  --surface-alt: #14182B;
+  --ink: #FFFFFF;
+  --ink-muted: #9AA0B5;
+  --ink-faint: #606880;
+  --coral: #B80A0A;
+  --coral-hover: #A00400;
+  --coral-pressed: #8A0303;
+  --navy-block: #14182B;
+  --line: rgba(255, 255, 255, 0.1);
+
+  /* Status Colors */
+  --status-process: #4A88FF;
+  --status-pending: #F5B638;
+  --status-disposed: #27B062;
+  --status-overdue: #D61E28;
+  --status-transferred: #8E6DED;
+
+  /* Dusk Constellation Hero Tokens */
+  --hero-cyan: #5FE0D0;
+  --hero-glow: rgba(95, 224, 208, 0.4);
+  --hero-dusk-top: #080B14;
+  --hero-dusk-mid: #0E1322;
+  --hero-dusk-bot: rgba(224, 90, 71, 0.12);
+  --hero-skyline-back: #0E1322;
+  --hero-skyline-front: #080B14;
+  --hero-sparkle: #E6B8E0;
+}
+
+body {
+  background-color: #080B14;
+  color: #FFFFFF;
+  color: var(--ink);
+  font-family: var(--font-sans);
+  min-height: 100vh;
+  margin: 0;
+  padding: 0;
+  overflow-x: hidden;
+  font-size: 13.5px;
+  line-height: 1.6;
+}
+
+/* Sharp, Flat Rectangle Base */
+*, ::before, ::after {
+  border-color: var(--line);
+}
+
+/* Bold Colour-Block Tiles (0-4px radius, flat colours, depth via offset/overlap) */
+.editorial-tile {
+  position: relative;
+  border-radius: 0px;
+  transition: transform 0.15s cubic-bezier(0.22, 1, 0.36, 1), box-shadow 0.15s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.editorial-tile:hover {
+  transform: translate(-2px, -2px);
+  box-shadow: 4px 4px 0px var(--coral);
+}
+
+.editorial-tile-navy:hover {
+  transform: translate(-2px, -2px);
+  box-shadow: 4px 4px 0px var(--coral);
+}
+
+.editorial-tile-coral:hover {
+  transform: translate(-2px, -2px);
+  box-shadow: 4px 4px 0px var(--navy-block);
+}
+
+/* Watermark Word */
+.watermark-word {
+  position: absolute;
+  font-family: var(--font-display);
+  font-weight: 900;
+  line-height: 0.8;
+  text-transform: uppercase;
+  color: rgba(0, 0, 0, 0.04);
+  pointer-events: none;
+  user-select: none;
+  z-index: 0;
+  white-space: nowrap;
+}
+
+.dark .watermark-word {
+  color: rgba(255, 255, 255, 0.03);
+}
+
+/* Buttons (Sharp Corners, 44px, Trailing Arrow ▸) */
+.btn-coral {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  background-color: var(--coral);
+  color: #FFFFFF;
+  font-weight: 700;
+  font-size: 13px;
+  height: 44px;
+  padding: 0 1.5rem;
+  border-radius: 0px;
+  border: none;
+  cursor: pointer;
+  transition: all 0.15s ease;
+  user-select: none;
+}
+
+.btn-coral:hover {
+  background-color: var(--coral-hover);
+  transform: translate(-1px, -1px);
+  box-shadow: 3px 3px 0px var(--navy-block);
+}
+
+.btn-coral:active {
+  transform: scale(0.98);
+}
+
+.btn-coral .btn-arrow {
+  display: inline-block;
+  transition: transform 0.15s ease;
+}
+
+.btn-coral:hover .btn-arrow {
+  transform: translateX(4px);
+}
+
+.btn-navy {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  background-color: var(--navy-block);
+  color: #FFFFFF;
+  font-weight: 700;
+  font-size: 13px;
+  height: 44px;
+  padding: 0 1.5rem;
+  border-radius: 0px;
+  border: 1px solid var(--line);
+  cursor: pointer;
+  transition: all 0.15s ease;
+  user-select: none;
+}
+
+.btn-navy:hover {
+  background-color: #0E111F;
+  transform: translate(-1px, -1px);
+  box-shadow: 3px 3px 0px var(--coral);
+}
+
+.btn-navy:active {
+  transform: scale(0.98);
+}
+
+.btn-outline {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  background-color: transparent;
+  color: var(--ink);
+  font-weight: 600;
+  font-size: 13px;
+  height: 44px;
+  padding: 0 1.25rem;
+  border-radius: 0px;
+  border: 1px solid var(--line);
+  cursor: pointer;
+  transition: all 0.15s ease;
+}
+
+.btn-outline:hover {
+  background-color: var(--surface-alt);
+  border-color: var(--ink);
+}
+
+.btn-tertiary {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.25rem;
+  background: none;
+  border: none;
+  padding: 0;
+  font-weight: 700;
+  font-size: 13px;
+  color: var(--ink);
+  border-bottom: 2px solid var(--coral);
+  cursor: pointer;
+  transition: color 0.15s ease;
+}
+
+.btn-tertiary:hover {
+  color: var(--coral);
+}
+
+/* Sharp Inputs (48px, 1px hairline, 2px coral focus outline) */
+.editorial-input {
+  height: 48px;
+  border-radius: 0px;
+  background-color: var(--surface);
+  border: 1px solid var(--line);
+  color: var(--ink);
+  padding: 0 14px;
+  font-size: 13.5px;
+  transition: border-color 0.15s ease, outline 0.15s ease;
+}
+
+.editorial-input:focus {
+  outline: 2px solid var(--coral);
+  outline-offset: 0px;
+  border-color: var(--coral);
+}
+
+/* Rotated Vertical Branding Stamp */
+.vertical-stamp {
+  writing-mode: vertical-rl;
+  transform: rotate(180deg);
+  font-size: 10px;
+  font-family: var(--font-mono);
+  font-weight: 700;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--ink-muted);
+  user-select: none;
+}
+
+/* Geometric Coral Arc Accent */
+.coral-arc-decor {
+  position: absolute;
+  width: 200px;
+  height: 200px;
+  border: 44px solid var(--coral);
+  border-radius: 50%;
+  pointer-events: none;
+  z-index: 0;
+  opacity: 0.85;
+}
+
+/* Numbered Badge for Tiles */
+.tile-index-tag {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  font-weight: 800;
+  letter-spacing: 0.1em;
+  opacity: 0.55;
+}
+
+/* Red Bar behind / through a large numeral */
+.coral-band-behind {
+  position: relative;
+  display: inline-block;
+}
+
+.coral-band-behind::before {
+  content: "";
+  position: absolute;
+  left: -8px;
+  right: -8px;
+  bottom: 12px;
+  height: 28px;
+  background-color: var(--coral);
+  z-index: 0;
+  pointer-events: none;
+}
+
+.coral-band-behind > * {
+  position: relative;
+  z-index: 1;
+}
+
+/* 2-Button Carousel / Page Control (96x40 navy block with ◂ ▸) */
+.carousel-nav-block {
+  display: inline-flex;
+  align-items: center;
+  height: 38px;
+  background-color: var(--navy-block);
+  border: 1px solid var(--line);
+}
+
+.carousel-nav-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 44px;
+  height: 100%;
+  color: #FFFFFF;
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  font-size: 14px;
+  transition: background-color 0.15s ease, color 0.15s ease;
+}
+
+.carousel-nav-btn:hover {
+  background-color: var(--coral);
+  color: #FFFFFF;
+}
+
+.carousel-nav-divider {
+  width: 1px;
+  height: 60%;
+  background-color: rgba(255, 255, 255, 0.2);
+}
+
+/* Flat Table */
+.editorial-table {
+  width: 100%;
+  border-collapse: collapse;
+  background-color: var(--surface);
+}
+
+.editorial-table th {
+  background-color: var(--navy-block);
+  color: #FFFFFF;
+  font-size: 11px;
+  font-weight: 800;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  padding: 12px 16px;
+  text-align: left;
+  border: none;
+}
+
+.editorial-table td {
+  padding: 10px 16px;
+  height: 44px;
+  border-bottom: 1px solid var(--line);
+}
+
+.editorial-table tr:hover td {
+  background-color: var(--surface-alt);
+}
+
+.editorial-table tr.selected td:first-child {
+  border-left: 3px solid var(--coral);
+}
+
+/* ============================================================================
+   AMBIENT HERO ANIMATION LAYER ("DUSK CONSTELLATION LOOP")
+   ============================================================================ */
+
+/* Dusk Sky Gradient */
+.hero-dusk-gradient {
+  background: linear-gradient(
+    180deg,
+    var(--hero-dusk-top) 0%,
+    var(--hero-dusk-mid) 52%,
+    var(--hero-dusk-bot) 100%
+  );
+}
+
+/* 3D Rotating Prism Animation */
+@keyframes prismRotate3D {
+  0% {
+    transform: rotateY(0deg) rotateX(12deg) rotateZ(0deg);
+  }
+  50% {
+    transform: rotateY(180deg) rotateX(-12deg) rotateZ(4deg);
+  }
+  100% {
+    transform: rotateY(360deg) rotateX(12deg) rotateZ(0deg);
+  }
+}
+
+@keyframes prismFloat {
+  0%, 100% {
+    transform: translateY(0px) rotate(0deg);
+  }
+  50% {
+    transform: translateY(-10px) rotate(2deg);
+  }
+}
+
+@keyframes sparkleGlow {
+  0%, 100% {
+    transform: scale(0.8);
+    opacity: 0.3;
+  }
+  50% {
+    transform: scale(1.15);
+    opacity: 0.85;
+  }
+}
+
+@keyframes shineSweepAcross {
+  0% {
+    transform: translateX(-120%) skewX(-20deg);
+    opacity: 0;
+  }
+  15% {
+    opacity: 1;
+  }
+  85% {
+    opacity: 1;
+  }
+  100% {
+    transform: translateX(250%) skewX(-20deg);
+    opacity: 0;
+  }
+}
+
+@keyframes sonarRing {
+  0% {
+    transform: scale(1);
+    opacity: 0.7;
+  }
+  100% {
+    transform: scale(4.2);
+    opacity: 0;
+  }
+}
+
+@keyframes streakSlide {
+  0% {
+    transform: translate(-100px, -60px);
+    opacity: 0;
+  }
+  20% {
+    opacity: 0.25;
+  }
+  80% {
+    opacity: 0.25;
+  }
+  100% {
+    transform: translate(240px, 140px);
+    opacity: 0;
+  }
+}
+
+@keyframes skylineParallax {
+  0%, 100% {
+    transform: translateX(0px);
+  }
+  50% {
+    transform: translateX(6px);
+  }
+}
+
+.animate-prism-float {
+  animation: prismFloat 6s ease-in-out infinite;
+}
+
+.animate-prism-rotate {
+  animation: prismRotate3D 12s linear infinite;
+  transform-style: preserve-3d;
+}
+
+.animate-skyline-parallax {
+  animation: skylineParallax 20s ease-in-out infinite;
+}
+
+
+@keyframes borderGlowSweep {
+  0% {
+    box-shadow: 0 0 0 0 rgba(95, 224, 208, 0);
+    border-color: var(--line);
+  }
+  50% {
+    box-shadow: 0 0 14px 2px rgba(95, 224, 208, 0.65);
+    border-color: #5FE0D0;
+  }
+  100% {
+    box-shadow: 0 0 0 0 rgba(95, 224, 208, 0);
+    border-color: var(--line);
+  }
+}
+
+.animate-glow-sweep {
+  animation: borderGlowSweep 1.2s ease-in-out;
+}
+
+/* Crazy Navbar Animations */
+@keyframes laserSpin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+@keyframes holographicShimmer {
+  0% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+  100% {
+    background-position: 0% 50%;
+  }
+}
+
+@keyframes eqBar1 {
+  0%, 100% { height: 3px; }
+  50% { height: 11px; }
+}
+
+@keyframes eqBar2 {
+  0%, 100% { height: 12px; }
+  50% { height: 5px; }
+}
+
+@keyframes eqBar3 {
+  0%, 100% { height: 6px; }
+  50% { height: 14px; }
+}
+
+.animate-laser-spin {
+  animation: laserSpin 4s linear infinite;
+}
+
+.animate-holographic-text {
+  background-size: 250% auto;
+  animation: holographicShimmer 5s ease infinite;
+}
+
+.animate-eq-1 {
+  animation: eqBar1 1.2s ease-in-out infinite;
+}
+
+.animate-eq-2 {
+  animation: eqBar2 0.9s ease-in-out infinite 0.2s;
+}
+
+.animate-eq-3 {
+  animation: eqBar3 1.1s ease-in-out infinite 0.4s;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .animate-prism-float,
+  .animate-prism-rotate,
+  .animate-skyline-parallax,
+  .animate-glow-sweep,
+  .animate-laser-spin,
+  .animate-holographic-text,
+  .animate-eq-1,
+  .animate-eq-2,
+  .animate-eq-3 {
+    animation: none !important;
+  }
+}
+
+
